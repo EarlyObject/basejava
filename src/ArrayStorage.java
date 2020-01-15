@@ -9,26 +9,18 @@ public class ArrayStorage {
         for (int i = 0; i < size; i++) {
             storage[i] = null;
         }
+        size = 0;
     }
 
     void save(Resume resume) {
-        for (int i = 0; i <= size; i++) {
-            if (storage[i] == null) {
-                storage[i] = resume;
-                size++;
-                break;
-            }
-        }
+        storage[size] = resume;
+        size++;
     }
 
     Resume get(String uuid) {
         for (int i = 0; i < size; i++) {
-            try {
-                if (storage[i].uuid.equals(uuid)) {
-                    return storage[i];
-                }
-            } catch (NullPointerException e) {
-                e.printStackTrace();
+            if (storage[i].uuid.equals(uuid)) {
+                return storage[i];
             }
         }
         return null;
@@ -37,13 +29,10 @@ public class ArrayStorage {
     void delete(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].uuid.equals(uuid)) {
-                if (i == size - 1) {
-                    storage[i] = null;
-                } else {
-                    storage[i] = storage[size - 1];
-                    storage[size - 1] = null;
-                }
+                storage[i] = storage[size - 1];
+                storage[size - 1] = null;
                 size--;
+                break;
             }
         }
     }
@@ -58,12 +47,6 @@ public class ArrayStorage {
     }
 
     int size() {
-        int elements = 0;
-        for (Resume resume : storage) {
-            if (resume != null) {
-                elements++;
-            }
-        }
-        return elements;
+        return size;
     }
 }
