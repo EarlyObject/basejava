@@ -12,27 +12,25 @@ public class ArrayStorage {
     private int size = 0;
 
     public void save(Resume resume) {
-        if (size >= storage.length) {
-            System.out.println("FAILURE!!! THE STORAGE IS FULL");
-        } else {
+        if (size < storage.length) {
             int index = getIndex(resume.getUuid());
             if (index < 0) {
                 storage[size] = resume;
                 size++;
-                System.out.println("RESUME SAVED");
             } else {
-                System.out.println("RESUME NOT FOUND");
+                System.out.println("RESUME " + resume.getUuid() + " ALREADY EXISTS");
             }
+        } else {
+            System.out.println("FAILURE!!! THE STORAGE IS FULL");
         }
     }
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index >= 0) {
-            System.out.println("RESUME FOUND");
             return storage[index];
         }
-        System.out.println("RESUME NOT FOUND");
+        System.out.println("RESUME " + uuid + " NOT FOUND");
         return null;
     }
 
@@ -40,9 +38,8 @@ public class ArrayStorage {
         int index = getIndex(resume.getUuid());
         if (index >= 0) {
             storage[index] = resume;
-            System.out.println("RESUME UPDATED");
         } else {
-            System.out.println("RESUME NOT FOUND");
+            System.out.println("RESUME " + resume.getUuid() + " NOT FOUND");
         }
     }
 
@@ -52,9 +49,8 @@ public class ArrayStorage {
             storage[index] = storage[size - 1];
             storage[size - 1] = null;
             size--;
-            System.out.println("RESUME DELETED");
         } else {
-            System.out.println("RESUME NOT FOUND");
+            System.out.println("RESUME " + uuid + " NOT FOUND");
         }
     }
 
