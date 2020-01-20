@@ -3,9 +3,6 @@ package ru.javawebinar.basejava;
 import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.storage.SortedArrayStorage;
 
-/**
- * Test for your com.urise.webapp.storage.ArrayStorage implementation
- */
 public class MainTestArrayStorage {
     static final SortedArrayStorage ARRAY_STORAGE = new SortedArrayStorage();
 
@@ -19,9 +16,9 @@ public class MainTestArrayStorage {
         final Resume r5 = new Resume();
         r5.setUuid("uuid5");
 
-
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r1);
+        ARRAY_STORAGE.delete(r2.getUuid());
         ARRAY_STORAGE.save(r5);
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.save(r3);
