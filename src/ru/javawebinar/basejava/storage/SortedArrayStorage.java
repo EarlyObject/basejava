@@ -7,15 +7,13 @@ import java.util.Arrays;
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
-    public void specificSaveImplementation(Resume resume) {
-        int indexToSave = size;
+    public void specificSaveImplementation(Resume resume, int index) {
+        int indexToSave = Math.abs(index) - 1;
 
-        for (int i = size - 1; (i >= 0) && (resume.getUuid().compareTo(storage[i].getUuid()) < 1); i--) {
-            indexToSave = i;
-            System.arraycopy(storage, i, storage, i + 1, 1);
+        if (Math.abs(index) != STORAGE_LIMIT) {
+            System.arraycopy(storage, indexToSave, storage, indexToSave + 1, size - indexToSave);
         }
         storage[indexToSave] = resume;
-        size++;
     }
 
     @Override
@@ -23,7 +21,8 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         if (index == size - 1) {
             storage[index] = null;
         } else {
-            System.arraycopy(storage, index + 1, storage, index, size - index);
+            System.arraycopy(storage, index + 1, storage, index, size - index - 1);
+            storage[size - 1] = null;
         }
     }
 
