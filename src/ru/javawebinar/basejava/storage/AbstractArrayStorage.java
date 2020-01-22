@@ -9,9 +9,9 @@ public abstract class AbstractArrayStorage implements Storage {
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    public abstract void specificSaveImplementation(Resume resume, int index);
+    protected abstract void specificSaveImplementation(Resume resume, int index);
 
-    public abstract void specificDeleteImplementation(int index);
+    protected abstract void specificDeleteImplementation(int index);
 
     protected abstract int getIndex(String uuid);
 

@@ -8,9 +8,9 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     public void specificSaveImplementation(Resume resume, int index) {
-        int indexToSave = Math.abs(index) - 1;
+        int indexToSave = -index - 1;
 
-        if (Math.abs(index) != STORAGE_LIMIT) {
+        if (indexToSave != STORAGE_LIMIT - 1) {
             System.arraycopy(storage, indexToSave, storage, indexToSave + 1, size - indexToSave);
         }
         storage[indexToSave] = resume;
@@ -18,12 +18,10 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
     public void specificDeleteImplementation(int index) {
-        if (index == size - 1) {
-            storage[index] = null;
-        } else {
+        if (index != size - 1) {
             System.arraycopy(storage, index + 1, storage, index, size - index - 1);
-            storage[size - 1] = null;
         }
+        storage[size - 1] = null;
     }
 
     @Override
