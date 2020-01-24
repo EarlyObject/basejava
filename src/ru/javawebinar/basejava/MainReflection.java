@@ -7,7 +7,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class MainReflection {
-    public static void main(String[] args) throws IllegalAccessException, InvocationTargetException {
+    public static void main(String[] args) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
 
         Resume resume = new Resume();
         Field field = resume.getClass().getDeclaredFields()[0];
@@ -22,11 +22,11 @@ public class MainReflection {
 
         for (Method m :
                 methods) {
-            System.out.println(m.getName());
+            System.out.println(m);
         }
-        System.out.println();
 
-        Object o = methods[1].invoke(resume);
+        System.out.println();
+        Object o = resume.getClass().getMethod("toString").invoke(resume);
         System.out.println(o);
         field.setAccessible(false);
     }
