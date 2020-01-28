@@ -7,16 +7,13 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
 
-public abstract class AbstractArrayStorage implements Storage {
-    protected static final int STORAGE_LIMIT = 10000;
+public abstract class AbstractArrayStorage extends AbstractStorage {
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
-    protected int size = 0;
 
     protected abstract void specificSaveImplementation(Resume resume, int index);
 
     protected abstract void specificDeleteImplementation(int index);
 
-    protected abstract int getIndex(String uuid);
 
     public void save(Resume resume) {
         if (size < STORAGE_LIMIT) {
@@ -63,10 +60,10 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    @Override
+   /* @Override
     public int size() {
         return size;
-    }
+    }*/
 
     @Override
     public void clear() {
