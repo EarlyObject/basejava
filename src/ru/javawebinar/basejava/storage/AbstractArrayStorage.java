@@ -60,10 +60,10 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         }
     }
 
-   /* @Override
+    @Override
     public int size() {
         return size;
-    }*/
+    }
 
     @Override
     public void clear() {

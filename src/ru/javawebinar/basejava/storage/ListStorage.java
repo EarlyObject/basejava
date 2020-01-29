@@ -8,23 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListStorage extends AbstractStorage {
-    protected final List<Resume> storage = new ArrayList<>(STORAGE_LIMIT);
+    protected final List<Resume> storage = new ArrayList<>();
 
     @Override
     public void save(Resume resume) {
-        if (!storage.contains(resume)) {
-            storage.add(resume);
-            size++;
-        } else {
+        if (getIndex(resume) != null) {
             throw new ExistStorageException(resume.getUuid());
+        } else {
+            storage.add(resume);
         }
     }
 
     @Override
     public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            return storage.get(index);
+        if (getIndex(uuid) != null) {
+            return storage.get(getIndex(uuid));
         } else {
             throw new NotExistStorageException(uuid);
         }
@@ -32,9 +30,8 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public void update(Resume resume) {
-        if (storage.contains(resume)) {
-            int index = storage.indexOf(resume);
-            storage.set(index, resume);
+        if (getIndex(resume) != null) {
+            storage.set(getIndex(resume), resume);
         } else {
             throw new NotExistStorageException(resume.getUuid());
         }
@@ -42,33 +39,42 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index >= 0) {
-            storage.remove(index);
-            size--;
+        if (getIndex(uuid) != null) {
+            Resume resume = get(uuid);
+            storage.remove(resume);
         } else {
             throw new NotExistStorageException(uuid);
         }
     }
 
     @Override
+    public int size() {
+        return storage.size();
+    }
+
+    @Override
     public void clear() {
         storage.clear();
-        size = 0;
     }
 
     @Override
     public Resume[] getAll() {
-        return (Resume[]) storage.toArray();
+        Resume[] resumes = new Resume[storage.size()];
+        return storage.toArray(resumes);
+    }
+
+    protected Integer getIndex(Resume resume) {
+        return getIndex(resume.getUuid());
     }
 
     @Override
-    protected int getIndex(String uuid) {
-        for (int i = 0; i < size; i++) {
+    protected Integer getIndex(String uuid) {
+        int storageSize = storage.size();
+        for (int i = 0; i < storageSize; i++) {
             if (uuid.equals(storage.get(i).getUuid())) {
                 return i;
             }
         }
-        return -1;
+        return null;
     }
 }

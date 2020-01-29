@@ -1,6 +1,8 @@
 package ru.javawebinar.basejava;
 
 import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.storage.AbstractStorage;
+import ru.javawebinar.basejava.storage.ListStorage;
 
 import java.util.*;
 
@@ -47,5 +49,17 @@ public class MainCollections {
         for (Map.Entry<String, Resume> entry : map.entrySet()) {
             System.out.println(entry.getValue());
         }
+
+        ListStorage listStorage = new ListStorage();
+        listStorage.save(RESUME_1);
+        listStorage.save(RESUME_2);
+        Resume testResume = listStorage.get(UUID_2);
+        System.out.println(testResume);
+        System.out.println();
+        for (Resume resume : listStorage.getAll()) {
+            System.out.println(resume);
+        }
+        listStorage.delete(UUID_1);
+        System.out.println(listStorage.size());
     }
 }
