@@ -31,23 +31,20 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public void update(Resume resume) {
-        Integer index = getIndex(resume);
+    public boolean checkAndUpdate(Resume resume, Integer index) {
         if (index != null) {
             storage.set(index, resume);
-        } else {
-            throw new NotExistStorageException(resume.getUuid());
+            return true;
         }
+        return false;
     }
 
-    @Override
-    public void delete(String uuid) {
-        Integer index = getIndex(uuid);
+    public boolean checkAndDelete(Integer index) {
         if (index != null) {
-            storage.remove(index);
-        } else {
-            throw new NotExistStorageException(uuid);
+            storage.remove((int)index);
+            return true;
         }
+        return false;
     }
 
     @Override
@@ -64,10 +61,6 @@ public class ListStorage extends AbstractStorage {
     public Resume[] getAll() {
         Resume[] resumes = new Resume[storage.size()];
         return storage.toArray(resumes);
-    }
-
-    protected Integer getIndex(Resume resume) {
-        return getIndex(resume.getUuid());
     }
 
     @Override

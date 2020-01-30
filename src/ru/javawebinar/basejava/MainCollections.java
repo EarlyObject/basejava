@@ -56,6 +56,7 @@ public class MainCollections {
         Resume testResume = listStorage.get(UUID_2);
         System.out.println(testResume);
         System.out.println();
+        System.out.println(listStorage.size());
         for (Resume resume : listStorage.getAll()) {
             System.out.println(resume);
         }
