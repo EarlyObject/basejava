@@ -41,7 +41,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getImpl(Integer index) {
+    protected Resume getImpl(Integer index, String uuid) {
         return storage[index];
     }
 
@@ -51,7 +51,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void deleteImpl(Integer index) {
+    protected void deleteImpl(Integer index, String uuid) {
         specificDeleteImplementation(index);
         storage[size - 1] = null;
         size--;

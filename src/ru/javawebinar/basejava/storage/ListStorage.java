@@ -14,7 +14,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getImpl(Integer index) {
+    protected Resume getImpl(Integer index, String uuid) {
         return storage.get(index);
     }
 
@@ -24,8 +24,8 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected void deleteImpl(Integer index) {
-        storage.remove((int) index);
+    protected void deleteImpl(Integer index, String uuid) {
+        storage.remove(index.intValue());
     }
 
     @Override

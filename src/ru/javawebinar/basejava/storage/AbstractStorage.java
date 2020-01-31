@@ -12,35 +12,35 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract void saveImpl(Resume resume, Integer index);
 
-    protected abstract Resume getImpl(Integer index);
+    protected abstract Resume getImpl(Integer index, String uuid);
 
     protected abstract void updateImpl(Integer index, Resume resume);
 
-    protected abstract void deleteImpl(Integer index);
+    protected abstract void deleteImpl(Integer index, String uuid);
 
     @Override
     public void save(Resume resume) {
         String uuid = resume.getUuid();
-        saveImpl(resume, returnIndexOrThrowExist(uuid));
+        saveImpl(resume, getIndexOrExist(uuid));
     }
 
     @Override
     public Resume get(String uuid) {
-        return getImpl(returnIndexOrThrowNotExist(uuid));
+        return getImpl(getIndexOrNotExist(uuid), uuid);
     }
 
     @Override
     public void update(Resume resume) {
         String uuid = resume.getUuid();
-        updateImpl(returnIndexOrThrowNotExist(uuid), resume);
+        updateImpl(getIndexOrNotExist(uuid), resume);
     }
 
     @Override
     public void delete(String uuid) {
-        deleteImpl(returnIndexOrThrowNotExist(uuid));
+        deleteImpl(getIndexOrNotExist(uuid), uuid);
     }
 
-    public Integer returnIndexOrThrowNotExist(String uuid) {
+    private Integer getIndexOrNotExist(String uuid) {
         Integer index = getIndex(uuid);
         if (checkIndex(index)) {
             return index;
@@ -49,7 +49,7 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
-    public Integer returnIndexOrThrowExist(String uuid) {
+    private Integer getIndexOrExist(String uuid) {
         Integer index = getIndex(uuid);
         if (checkIndex(index)) {
             throw new ExistStorageException(uuid);
