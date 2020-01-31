@@ -21,7 +21,7 @@ public class ListStorageTest{
     private static final Resume RESUME_4 = new Resume(UUID_4);
 
     public ListStorageTest() {
-        storage = new SortedArrayStorage();
+        storage = new ListStorage();
     }
 
     @Before
