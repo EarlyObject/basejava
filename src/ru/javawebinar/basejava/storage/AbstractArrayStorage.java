@@ -1,7 +1,5 @@
 package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.basejava.exception.ExistStorageException;
-import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
@@ -14,51 +12,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected abstract void specificSaveImplementation(Resume resume, int index);
 
-    protected abstract void specificDeleteImplementation(int index);
-
-
-    public void save(Resume resume) {
-        if (size < STORAGE_LIMIT) {
-            Integer index = getIndex(resume);
-            if (index < 0) {
-                specificSaveImplementation(resume, index);
-                size++;
-            } else {
-                throw new ExistStorageException(resume.getUuid());
-            }
-        } else {
-            throw new StorageException("FAILURE!!! THE STORAGE IS FULL", resume.getUuid());
-        }
-    }
-
-    @Override
-    public Resume get(String uuid) {
-        Integer index = getIndex(uuid);
-        if (index >= 0) {
-            return storage[index];
-        }
-        throw new NotExistStorageException(uuid);
-    }
-
-    @Override
-    protected boolean checkAndUpdate(Resume resume, Integer index) {
-        if (index >= 0) {
-            storage[index] = resume;
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    protected boolean checkAndDelete(Integer index) {
-        if (index >= 0) {
-            specificDeleteImplementation(index);
-            storage[size - 1] = null;
-            size--;
-            return true;
-        }
-        return false;
-    }
+    protected abstract void specificDeleteImplementation(Integer index);
 
     @Override
     public int size() {
@@ -74,5 +28,37 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     public Resume[] getAll() {
         return Arrays.copyOfRange(storage, 0, size);
+    }
+
+    @Override
+    protected void saveImpl(Resume resume, Integer index) {
+        if (size < STORAGE_LIMIT) {
+            specificSaveImplementation(resume, index);
+            size++;
+        } else {
+            throw new StorageException("FAILURE!!! THE STORAGE IS FULL", resume.getUuid());
+        }
+    }
+
+    @Override
+    protected Resume getImpl(Integer index) {
+        return storage[index];
+    }
+
+    @Override
+    protected void updateImpl(Integer index, Resume resume) {
+        storage[index] = resume;
+    }
+
+    @Override
+    protected void deleteImpl(Integer index) {
+        specificDeleteImplementation(index);
+        storage[size - 1] = null;
+        size--;
+    }
+
+    @Override
+    protected Boolean checkIndex(Integer index) {
+        return (index >= 0);
     }
 }

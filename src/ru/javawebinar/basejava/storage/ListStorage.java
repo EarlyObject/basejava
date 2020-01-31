@@ -1,7 +1,5 @@
 package ru.javawebinar.basejava.storage;
 
-import ru.javawebinar.basejava.exception.ExistStorageException;
-import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.ArrayList;
@@ -11,40 +9,23 @@ public class ListStorage extends AbstractStorage {
     protected final List<Resume> storage = new ArrayList<>();
 
     @Override
-    public void save(Resume resume) {
-        Integer index = getIndex(resume);
-        if (index != null) {
-            throw new ExistStorageException(resume.getUuid());
-        } else {
-            storage.add(resume);
-        }
+    protected void saveImpl(Resume resume, Integer index) {
+        storage.add(resume);
     }
 
     @Override
-    public Resume get(String uuid) {
-        Integer index = getIndex(uuid);
-        if (index != null) {
-            return storage.get(index);
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
+    protected Resume getImpl(Integer index) {
+        return storage.get(index);
     }
 
     @Override
-    public boolean checkAndUpdate(Resume resume, Integer index) {
-        if (index != null) {
-            storage.set(index, resume);
-            return true;
-        }
-        return false;
+    protected void updateImpl(Integer index, Resume resume) {
+        storage.set(index, resume);
     }
 
-    public boolean checkAndDelete(Integer index) {
-        if (index != null) {
-            storage.remove((int)index);
-            return true;
-        }
-        return false;
+    @Override
+    protected void deleteImpl(Integer index) {
+        storage.remove((int) index);
     }
 
     @Override
@@ -72,5 +53,10 @@ public class ListStorage extends AbstractStorage {
             }
         }
         return null;
+    }
+
+    @Override
+    protected Boolean checkIndex(Integer index) {
+        return (index != null);
     }
 }
