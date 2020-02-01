@@ -6,17 +6,17 @@ import ru.javawebinar.basejava.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    protected abstract Integer getIndex(String uuid);
+    protected abstract Object getIndex(String uuid);
 
-    protected abstract Boolean checkIndex(Integer index);
+    protected abstract Boolean checkIndex(Object index);
 
-    protected abstract void saveImpl(Resume resume, Integer index);
+    protected abstract void saveImpl(Resume resume, Object index);
 
-    protected abstract Resume getImpl(Integer index, String uuid);
+    protected abstract Resume getImpl(Object index);
 
-    protected abstract void updateImpl(Integer index, Resume resume);
+    protected abstract void updateImpl(Object index, Resume resume);
 
-    protected abstract void deleteImpl(Integer index, String uuid);
+    protected abstract void deleteImpl(Object index, String uuid);
 
     @Override
     public void save(Resume resume) {
@@ -26,7 +26,7 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public Resume get(String uuid) {
-        return getImpl(getIndexOrNotExist(uuid), uuid);
+        return getImpl(getIndexOrNotExist(uuid));
     }
 
     @Override
@@ -40,8 +40,8 @@ public abstract class AbstractStorage implements Storage {
         deleteImpl(getIndexOrNotExist(uuid), uuid);
     }
 
-    private Integer getIndexOrNotExist(String uuid) {
-        Integer index = getIndex(uuid);
+    private Object getIndexOrNotExist(String uuid) {
+        Object index = getIndex(uuid);
         if (checkIndex(index)) {
             return index;
         } else {
@@ -49,8 +49,8 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
-    private Integer getIndexOrExist(String uuid) {
-        Integer index = getIndex(uuid);
+    private Object getIndexOrExist(String uuid) {
+        Object index = getIndex(uuid);
         if (checkIndex(index)) {
             throw new ExistStorageException(uuid);
         } else {

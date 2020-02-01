@@ -10,7 +10,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected int size = 0;
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
 
-    protected abstract void specificSaveImplementation(Resume resume, int index);
+    protected abstract void specificSaveImplementation(Resume resume, Integer index);
 
     protected abstract void specificDeleteImplementation(Integer index);
 
@@ -31,9 +31,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void saveImpl(Resume resume, Integer index) {
+    protected void saveImpl(Resume resume, Object index) {
         if (size < STORAGE_LIMIT) {
-            specificSaveImplementation(resume, index);
+            specificSaveImplementation(resume, (Integer) index);
             size++;
         } else {
             throw new StorageException("FAILURE!!! THE STORAGE IS FULL", resume.getUuid());
@@ -41,24 +41,24 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getImpl(Integer index, String uuid) {
-        return storage[index];
+    protected Resume getImpl(Object index) {
+        return storage[(Integer) index];
     }
 
     @Override
-    protected void updateImpl(Integer index, Resume resume) {
-        storage[index] = resume;
+    protected void updateImpl(Object index, Resume resume) {
+        storage[(Integer) index] = resume;
     }
 
     @Override
-    protected void deleteImpl(Integer index, String uuid) {
-        specificDeleteImplementation(index);
+    protected void deleteImpl(Object index, String uuid) {
+        specificDeleteImplementation((Integer) index);
         storage[size - 1] = null;
         size--;
     }
 
     @Override
-    protected Boolean checkIndex(Integer index) {
-        return (index >= 0);
+    protected Boolean checkIndex(Object index) {
+        return ((Integer) index >= 0);
     }
 }

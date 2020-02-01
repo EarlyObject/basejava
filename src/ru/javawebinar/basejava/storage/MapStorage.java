@@ -9,35 +9,22 @@ public class MapStorage extends AbstractStorage {
     protected final Map<String, Resume> storage = new HashMap<>();
 
     @Override
-    protected Integer getIndex(String uuid) {
-        if (storage.containsKey(uuid)) {
-            return uuid.hashCode();
-        }
-        return null;
-    }
-
-    @Override
-    protected Boolean checkIndex(Integer index) {
-        return (index != null);
-    }
-
-    @Override
-    protected void saveImpl(Resume resume, Integer index) {
+    protected void saveImpl(Resume resume, Object index) {
         storage.put(resume.getUuid(), resume);
     }
 
     @Override
-    protected Resume getImpl(Integer index, String uuid) {
-        return storage.get(uuid);
+    protected Resume getImpl(Object index) {
+        return storage.get(index);
     }
 
     @Override
-    protected void updateImpl(Integer index, Resume resume) {
-        storage.replace(resume.getUuid(), resume);
+    protected void updateImpl(Object index, Resume resume) {
+        storage.replace((String) index, resume);
     }
 
     @Override
-    protected void deleteImpl(Integer index, String uuid) {
+    protected void deleteImpl(Object index, String uuid) {
         storage.remove(uuid);
     }
 
@@ -54,5 +41,18 @@ public class MapStorage extends AbstractStorage {
     @Override
     public Resume[] getAll() {
         return storage.values().toArray(new Resume[storage.size()]);
+    }
+
+    @Override
+    protected Object getIndex(String uuid) {
+        if (storage.containsKey(uuid)) {
+            return uuid;
+        }
+        return null;
+    }
+
+    @Override
+    protected Boolean checkIndex(Object index) {
+        return (storage.containsKey(index));
     }
 }

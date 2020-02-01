@@ -7,7 +7,7 @@ import java.util.Arrays;
 public class SortedArrayStorage extends AbstractArrayStorage {
 
     @Override
-    protected void specificSaveImplementation(Resume resume, int index) {
+    protected void specificSaveImplementation(Resume resume, Integer index) {
         int indexToSave = -index - 1;
 
         if (indexToSave != STORAGE_LIMIT - 1) {
