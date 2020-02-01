@@ -6,12 +6,6 @@ import ru.javawebinar.basejava.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    /*protected  Integer getIndex(String uuid) {
-
-            return uuid.hashCode();
-
-    }
-*/
     protected abstract Integer getIndex(String uuid);
 
     protected abstract Boolean checkIndex(Integer index);
