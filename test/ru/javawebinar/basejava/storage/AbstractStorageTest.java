@@ -93,10 +93,10 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAll() {
-        if (!(storage instanceof MapStorage)) {
+    //    if (!(storage instanceof MapStorage)) {
             Resume[] test2 = {RESUME_1, RESUME_2, RESUME_3};
             assertArrayEquals(test2, storage.getAll());
             assertEquals(3, storage.getAll().length);
         }
-    }
+   // }
 }
