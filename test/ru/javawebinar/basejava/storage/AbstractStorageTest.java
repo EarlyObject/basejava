@@ -4,14 +4,12 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
-import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import static org.junit.Assert.*;
-import static ru.javawebinar.basejava.storage.AbstractArrayStorage.STORAGE_LIMIT;
 
 public abstract class AbstractStorageTest {
-    private Storage storage;
+    protected Storage storage;
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -47,18 +45,6 @@ public abstract class AbstractStorageTest {
         storage.save(RESUME_2);
     }
 
-    @Test(expected = StorageException.class)
-    public void saveOverflow() {
-        storage.clear();
-        try {
-            for (int i = 0; i < STORAGE_LIMIT; i++) {
-                storage.save(new Resume());
-            }
-        } catch (StorageException e) {
-            fail("test failed");
-        }
-        storage.save(RESUME_4);
-    }
 
     @Test
     public void get() {
@@ -107,8 +93,10 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAll() {
-        Resume[] test2 = {RESUME_1, RESUME_2, RESUME_3};
-        assertArrayEquals(test2, storage.getAll());
-        assertEquals(3, storage.getAll().length);
+        if (!(storage instanceof MapStorage)) {
+            Resume[] test2 = {RESUME_1, RESUME_2, RESUME_3};
+            assertArrayEquals(test2, storage.getAll());
+            assertEquals(3, storage.getAll().length);
+        }
     }
 }
