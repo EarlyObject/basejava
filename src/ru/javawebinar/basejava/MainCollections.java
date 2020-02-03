@@ -1,7 +1,6 @@
 package ru.javawebinar.basejava;
 
 import ru.javawebinar.basejava.model.Resume;
-import ru.javawebinar.basejava.storage.AbstractStorage;
 import ru.javawebinar.basejava.storage.ListStorage;
 
 import java.util.*;
@@ -21,12 +20,6 @@ public class MainCollections {
         collection.add(RESUME_2);
         collection.add(RESUME_3);
 
-        for (Resume resume : collection) {
-            System.out.println(resume);
-            if (Objects.equals(resume.getUuid(), UUID_1)) {
-                //    collection.remove(resume);
-            }
-        }
         System.out.println();
 
         Iterator<Resume> iterator = collection.iterator();
@@ -57,7 +50,7 @@ public class MainCollections {
         System.out.println(testResume);
         System.out.println();
         System.out.println(listStorage.size());
-        for (Resume resume : listStorage.getAll()) {
+        for (Resume resume : listStorage.getAllSorted()) {
             System.out.println(resume);
         }
         listStorage.delete(UUID_1);
