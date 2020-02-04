@@ -54,7 +54,6 @@ public abstract class AbstractStorageTest {
         storage.save(RESUME_2);
     }
 
-
     @Test
     public void get() {
         assertEquals(RESUME_2, storage.get(UUID_2));
@@ -100,8 +99,10 @@ public abstract class AbstractStorageTest {
         assertEquals(0, storage.size());
     }
 
+  //  List<Resume> sortedList = storage.getAllSorted();
+
     @Test
-    public void getAllSorted() {
+    public void getAllSortedTest() {
         List<Resume> test2 = new ArrayList<>();
         test2.add(RESUME_1);
         test2.add(RESUME_2);
