@@ -26,6 +26,6 @@ public class MapResumeStorage extends AbstractMapStorage {
 
     @Override
     protected Boolean isSearchKeyValid(Object searchKey) {
-        return (searchKey != null);
+        return searchKey != null;
     }
 }

@@ -26,9 +26,7 @@ public abstract class AbstractMapStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> returnValue = new ArrayList<>(storage.values());
-        sort(returnValue);
-        return returnValue;
+    public List<Resume> getAll() {
+        return new ArrayList<>(storage.values());
     }
 }

@@ -99,16 +99,14 @@ public abstract class AbstractStorageTest {
         assertEquals(0, storage.size());
     }
 
-
     @Test
     public void getAllSortedTest() {
         List<Resume> sortedList = storage.getAllSorted();
         List<Resume> test2 = new ArrayList<>();
+        test2.add(RESUME_3);
         test2.add(RESUME_1);
         test2.add(RESUME_2);
-        test2.add(RESUME_3);
         assertEquals(test2, sortedList);
         assertEquals(3, sortedList.size());
     }
-
 }

@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public abstract class AbstractStorage implements Storage {
+    private static final ResumeComparator RESUME_COMPARATOR = new ResumeComparator();
 
     protected abstract void saveImpl(Object searchKey, Resume resume);
 
@@ -20,6 +21,9 @@ public abstract class AbstractStorage implements Storage {
     protected abstract Object getSearchKey(String uuid);
 
     protected abstract Boolean isSearchKeyValid(Object searchKey);
+
+    public abstract List<Resume> getAll();
+
 
     @Override
     public void save(Resume resume) {
@@ -43,6 +47,13 @@ public abstract class AbstractStorage implements Storage {
         deleteImpl(getSearchKeyOrNotExistEx(uuid));
     }
 
+    @Override
+    public List<Resume> getAllSorted() {
+        List<Resume> returnValue = getAll();
+        returnValue.sort(RESUME_COMPARATOR);
+        return returnValue;
+    }
+
     private Object getSearchKeyOrNotExistEx(String uuid) {
         Object searchKey = getSearchKey(uuid);
         if (isSearchKeyValid(searchKey)) {
@@ -61,8 +72,15 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
-    public void sort(List<Resume> listOfResume) {
-        Comparator<Resume> comparator = Comparator.comparing(Resume::getUuid);
-        listOfResume.sort(comparator);
+    private static class ResumeComparator implements Comparator<Resume> {
+        @Override
+        public int compare(Resume o1, Resume o2) {
+            if (!o1.equals(o2)) {
+                return o1.getFullName().compareTo(o2.getFullName());
+
+            } else {
+                return o1.getUuid().compareTo(o2.getUuid());
+            }
+        }
     }
 }
