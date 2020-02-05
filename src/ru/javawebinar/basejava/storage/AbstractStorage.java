@@ -7,20 +7,20 @@ import ru.javawebinar.basejava.model.Resume;
 import java.util.Comparator;
 import java.util.List;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<SK> implements Storage {
     private static final Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getFullName).thenComparing(Resume::getUuid);
 
-    protected abstract void saveImpl(Object searchKey, Resume resume);
+    protected abstract void saveImpl(SK searchKey, Resume resume);
 
-    protected abstract Resume getImpl(Object searchKey);
+    protected abstract Resume getImpl(SK searchKey);
 
-    protected abstract void updateImpl(Object searchKey, Resume resume);
+    protected abstract void updateImpl(SK searchKey, Resume resume);
 
-    protected abstract void deleteImpl(Object searchKey);
+    protected abstract void deleteImpl(SK searchKey);
 
-    protected abstract Object getSearchKey(String uuid);
+    protected abstract SK getSearchKey(String uuid);
 
-    protected abstract Boolean isSearchKeyValid(Object searchKey);
+    protected abstract Boolean isSearchKeyValid(SK searchKey);
 
     protected abstract List<Resume> getAll();
 
@@ -53,8 +53,8 @@ public abstract class AbstractStorage implements Storage {
         return returnValue;
     }
 
-    private Object getSearchKeyOrNotExistEx(String uuid) {
-        Object searchKey = getSearchKey(uuid);
+    private SK getSearchKeyOrNotExistEx(String uuid) {
+        SK searchKey = getSearchKey(uuid);
         if (isSearchKeyValid(searchKey)) {
             return searchKey;
         } else {
@@ -62,8 +62,8 @@ public abstract class AbstractStorage implements Storage {
         }
     }
 
-    private Object getSearchKeyOrExistEx(String uuid) {
-        Object searchKey = getSearchKey(uuid);
+    private SK getSearchKeyOrExistEx(String uuid) {
+        SK searchKey = getSearchKey(uuid);
         if (isSearchKeyValid(searchKey)) {
             throw new ExistStorageException(uuid);
         } else {

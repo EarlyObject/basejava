@@ -6,7 +6,7 @@ import ru.javawebinar.basejava.model.Resume;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected static final int STORAGE_LIMIT = 10000;
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
@@ -32,9 +32,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected void saveImpl(Object searchKey, Resume resume) {
+    protected void saveImpl(Integer searchKey, Resume resume) {
         if (size < STORAGE_LIMIT) {
-            specificSaveImplementation(resume, (Integer) searchKey);
+            specificSaveImplementation(resume, searchKey);
             size++;
         } else {
             throw new StorageException("FAILURE!!! THE STORAGE IS FULL", resume.getUuid());
@@ -42,24 +42,24 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected Resume getImpl(Object searchKey) {
-        return storage[(Integer) searchKey];
+    protected Resume getImpl(Integer searchKey) {
+        return storage[searchKey];
     }
 
     @Override
-    protected void updateImpl(Object searchKey, Resume resume) {
-        storage[(Integer) searchKey] = resume;
+    protected void updateImpl(Integer searchKey, Resume resume) {
+        storage[searchKey] = resume;
     }
 
     @Override
-    protected void deleteImpl(Object searchKey) {
-        specificDeleteImplementation((Integer) searchKey);
+    protected void deleteImpl(Integer searchKey) {
+        specificDeleteImplementation(searchKey);
         storage[size - 1] = null;
         size--;
     }
 
     @Override
-    protected Boolean isSearchKeyValid(Object searchKey) {
-        return ((Integer) searchKey >= 0);
+    protected Boolean isSearchKeyValid(Integer searchKey) {
+        return (searchKey >= 0);
     }
 }
