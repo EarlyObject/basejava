@@ -24,7 +24,6 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract List<Resume> getAll();
 
-
     @Override
     public void save(Resume resume) {
         String uuid = resume.getUuid();

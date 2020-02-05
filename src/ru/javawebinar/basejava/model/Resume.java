@@ -8,12 +8,12 @@ public class Resume {
     private String uuid;
 
     public Resume(String fullName) {
-        this(fullName, UUID.randomUUID().toString());
+        this(UUID.randomUUID().toString(), fullName);
     }
 
-    public Resume(String fullName, String uuid) {
-        this.fullName = Objects.requireNonNull(fullName, "fullName must not be null");
+    public Resume(String uuid, String fullName) {
         this.uuid = Objects.requireNonNull(uuid, "uuid must not be null");
+        this.fullName = Objects.requireNonNull(fullName, "fullName must not be null");
     }
 
     public String getUuid() {

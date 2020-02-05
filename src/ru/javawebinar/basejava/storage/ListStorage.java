@@ -9,6 +9,16 @@ public class ListStorage extends AbstractStorage {
     protected final List<Resume> storage = new ArrayList<>();
 
     @Override
+    public int size() {
+        return storage.size();
+    }
+
+    @Override
+    public void clear() {
+        storage.clear();
+    }
+
+    @Override
     protected void saveImpl(Object searchKey, Resume resume) {
         storage.add(resume);
     }
@@ -26,16 +36,6 @@ public class ListStorage extends AbstractStorage {
     @Override
     protected void deleteImpl(Object searchKey) {
         storage.remove(((Integer) searchKey).intValue());
-    }
-
-    @Override
-    public int size() {
-        return storage.size();
-    }
-
-    @Override
-    public void clear() {
-        storage.clear();
     }
 
     @Override

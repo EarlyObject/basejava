@@ -11,11 +11,6 @@ public abstract class AbstractMapStorage extends AbstractStorage {
     protected final Map<String, Resume> storage = new HashMap<>();
 
     @Override
-    protected void saveImpl(Object searchKey, Resume resume) {
-        storage.put(resume.getUuid(), resume);
-    }
-
-    @Override
     public int size() {
         return storage.size();
     }
@@ -26,7 +21,12 @@ public abstract class AbstractMapStorage extends AbstractStorage {
     }
 
     @Override
-    public List<Resume> getAll() {
+    protected void saveImpl(Object searchKey, Resume resume) {
+        storage.put(resume.getUuid(), resume);
+    }
+
+    @Override
+    protected List<Resume> getAll() {
         return new ArrayList<>(storage.values());
     }
 }
