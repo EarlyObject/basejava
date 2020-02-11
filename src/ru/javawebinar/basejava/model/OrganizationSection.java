@@ -15,12 +15,10 @@ public class OrganizationSection implements Section {
         StringBuilder builder = new StringBuilder();
 
         for (Map.Entry<TimeInterval, Organization> entry : organizationMap.entrySet()) {
-           builder.append(entry.getKey().toString()).append(System.getProperty("line.separator"));
-           builder.append(entry.getValue().toString()).append(System.getProperty("line.separator"));
-            System.out.println();
+            builder.append(entry.getValue().toString());
+            builder.append(entry.getKey().toString()).append(System.lineSeparator());
+            builder.append(System.lineSeparator());
         }
-
-        builder.append(System.lineSeparator());
         return builder.toString();
     }
 }

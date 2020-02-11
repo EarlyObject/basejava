@@ -4,14 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListSection implements Section {
-    protected List<String> listOfFields = new ArrayList<>();
+    protected List<String> list = new ArrayList<>();
 
-    public List<String> getListOfFields() {
-        return listOfFields;
+    public List<String> getList() {
+        return list;
     }
 
     @Override
     public String toString() {
-        return listOfFields.toString();
+        StringBuilder builder = new StringBuilder();
+        for (String s: list) {
+          builder.append("* ").append(s).append("\n");
+        }
+        builder.append(System.lineSeparator());
+        return builder.toString();
     }
+
+
 }

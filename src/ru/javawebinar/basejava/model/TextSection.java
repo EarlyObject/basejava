@@ -3,15 +3,16 @@ package ru.javawebinar.basejava.model;
 import java.util.Objects;
 
 public class TextSection implements Section {
+    public String text;
 
-    public String textField;
-
-    public TextSection(String textField) {
-        this.textField = Objects.requireNonNull(textField);
+    public TextSection(String text) {
+        this.text = Objects.requireNonNull(text);
     }
 
     @Override
     public String toString() {
-        return textField;
+        StringBuilder builder = new StringBuilder();
+        builder.append(text).append(System.lineSeparator());
+        return builder.toString();
     }
 }

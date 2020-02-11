@@ -11,7 +11,7 @@ public class MainResume {
         Resume testResume = new Resume("Григорий Кислин");
 
         Map<ContactType, String> contacts = testResume.getContacts();
-        Map<SectionType, Object> sections = testResume.getSections();
+        Map<SectionType, Section> sections = testResume.getSections();
 
         contacts.put(ContactType.PHONE_NUMBER, "+7(921) 855-0482");
         contacts.put(ContactType.SKYPE, "grigory.kislin");
@@ -25,7 +25,7 @@ public class MainResume {
         TextSection personal = new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
 
         ListSection achievement = new ListSection();
-        List<String> achievementsList = achievement.getListOfFields();
+        List<String> achievementsList = achievement.getList();
         achievementsList.add("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", " +
                 "\"Многомодульный maven. Многопоточность. XML (JAXB/StAX). Веб сервисы (JAX-RS/SOAP). Удаленное взаимодействие (JMS/AKKA)\". " +
                 "Организация онлайн стажировок и ведение проектов. Более 1000 выпускников.");
@@ -33,7 +33,7 @@ public class MainResume {
                 "Интеграция с Twilio, DuoSecurity, Google Authenticator, Jira, Zendesk.");
 
         ListSection qualifications = new ListSection();
-        List<String> qualificationsList = qualifications.getListOfFields();
+        List<String> qualificationsList = qualifications.getList();
         qualificationsList.add("JEE AS: GlassFish (v2.1, v3), OC4J, JBoss, Tomcat, Jetty, WebLogic, WSO2");
         qualificationsList.add("Version control: Subversion, Git, Mercury, ClearCase, Perforce");
         qualificationsList.add("DB: PostgreSQL(наследование, pgplsql, PL/Python), Redis (Jedis), H2, Oracle");
@@ -58,23 +58,22 @@ public class MainResume {
 
         sections.put(SectionType.OBJECTIVE, objective);
         sections.put(SectionType.PERSONAL, personal);
-        sections.put(SectionType.ACHIEVEMENT, achievementsList);
-        sections.put(SectionType.QUALIFICATIONS, qualificationsList);
-        sections.put(SectionType.EXPERIENCE, experienceMap);
-        sections.put(SectionType.EDUCATION, educationMap);
+        sections.put(SectionType.ACHIEVEMENT, achievement);
+        sections.put(SectionType.QUALIFICATIONS, qualifications);
+        sections.put(SectionType.EXPERIENCE, experience);
+        sections.put(SectionType.EDUCATION, education);
 
         System.out.println(testResume.getFullName());
-        System.out.println(testResume.getContacts().get(ContactType.PHONE_NUMBER));
         System.out.println();
 
         for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
             System.out.println(entry.getKey() + " " + entry.getValue());
         }
         System.out.println();
-        for ( SectionType sectionType : sections.keySet()) {
-            System.out.println(sectionType.toString());
-            System.out.println(sections.get(sectionType).toString());
-            System.out.println();
+
+        for (Map.Entry<SectionType, Section> entry : sections.entrySet()) {
+            System.out.println(entry.getKey());
+            System.out.println(entry.getValue());
         }
     }
 }
