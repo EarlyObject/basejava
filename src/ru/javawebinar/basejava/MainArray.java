@@ -19,7 +19,7 @@ public class MainArray {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Resume r;
         while (true) {
-            System.out.print("Введите одну из команд - (list | save fullName | update uuid fullName | delete uuid | get uuid | clear | exit): ");
+            System.out.print("Введите одну из команд - (list | save meal | update meal | delete meal | get meal | clear | exit): ");
             String[] params = reader.readLine().trim().toLowerCase().split(" ");
             if (params.length < 1 || params.length > 3) {
                 System.out.println("Неверная команда.");
