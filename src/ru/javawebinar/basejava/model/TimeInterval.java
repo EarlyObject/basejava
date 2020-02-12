@@ -1,24 +1,52 @@
 package ru.javawebinar.basejava.model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class TimeInterval {
-    private LocalDate beginning;
-    private LocalDate end;
+    private final LocalDate begin;
+    private final LocalDate end;
+    private String position;
     private String description;
 
-
-    public TimeInterval(LocalDate beginning, LocalDate end) {
-        this.beginning = beginning;
-        this.end = end;
+    public TimeInterval(LocalDate begin, LocalDate end) {
+        this.begin = Objects.requireNonNull(begin);
+        this.end = Objects.requireNonNull(end);
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
     @Override
     public String toString() {
-        return beginning + " - " + end + " " + description;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/yyyy");
+        return begin.format(formatter) +
+                "-" +
+                end.format(formatter) +
+                " " +
+                (position != null ? position : "") +
+                System.lineSeparator() +
+                description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TimeInterval)) return false;
+        TimeInterval that = (TimeInterval) o;
+        return Objects.equals(begin, that.begin) &&
+                Objects.equals(end, that.end) &&
+                Objects.equals(description, that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(begin, end, description);
     }
 }

@@ -3,7 +3,7 @@ package ru.javawebinar.basejava.model;
 import java.util.Objects;
 
 public class TextSection implements Section {
-    public String text;
+    public final String text;
 
     public TextSection(String text) {
         this.text = Objects.requireNonNull(text);
@@ -11,8 +11,19 @@ public class TextSection implements Section {
 
     @Override
     public String toString() {
-        StringBuilder builder = new StringBuilder();
-        builder.append(text).append(System.lineSeparator());
-        return builder.toString();
+        return text + System.lineSeparator();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TextSection)) return false;
+        TextSection that = (TextSection) o;
+        return Objects.equals(text, that.text);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(text);
     }
 }

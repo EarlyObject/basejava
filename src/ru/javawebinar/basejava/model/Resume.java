@@ -5,8 +5,8 @@ import java.util.*;
 public class Resume {
     private String fullName;
     private String uuid;
-    protected Map<ContactType, String> contacts = new LinkedHashMap<>();
-    protected Map<SectionType, Section> sections = new LinkedHashMap<>();
+    protected Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
+    protected Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);
@@ -52,6 +52,8 @@ public class Resume {
         return "Resume{" +
                 "fullName='" + fullName + '\'' +
                 ", uuid='" + uuid + '\'' +
+                ", contacts=" + contacts +
+                ", sections=" + sections +
                 '}';
     }
 }

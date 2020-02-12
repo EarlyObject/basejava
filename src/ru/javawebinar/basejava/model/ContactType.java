@@ -7,5 +7,11 @@ public enum ContactType {
     LINKEDIN_PROFILE,
     GITHUB_PROFILE,
     STACKOVERFLOW_PROFILE,
-    WEBPAGE
+    WEBPAGE;
+
+    private String title;
+
+    public String getTitle() {
+        return title;
+    }
 }

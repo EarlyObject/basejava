@@ -1,24 +1,39 @@
 package ru.javawebinar.basejava.model;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Objects;
 
 public class OrganizationSection implements Section {
-   private Map<TimeInterval, Organization> organizationMap = new LinkedHashMap<>();
+    private final List<Organization> list;
 
-    public Map<TimeInterval, Organization> getOrganizationMap() {
-        return organizationMap;
+    public OrganizationSection(List<Organization> list) {
+        this.list = Objects.requireNonNull(list);
+    }
+
+    public List<Organization> getList() {
+        return list;
     }
 
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-
-        for (Map.Entry<TimeInterval, Organization> entry : organizationMap.entrySet()) {
-            builder.append(entry.getValue().toString());
-            builder.append(entry.getKey().toString()).append(System.lineSeparator());
-            builder.append(System.lineSeparator());
+        for (Organization organization : list) {
+            builder.append("* ")
+                    .append(organization.toString());
         }
         return builder.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof OrganizationSection)) return false;
+        OrganizationSection that = (OrganizationSection) o;
+        return Objects.equals(list, that.list);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(list);
     }
 }
