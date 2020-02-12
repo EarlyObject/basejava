@@ -17,7 +17,7 @@ public class TextSection implements Section {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TextSection)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         TextSection that = (TextSection) o;
         return Objects.equals(text, that.text);
     }

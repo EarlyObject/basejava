@@ -27,7 +27,7 @@ public class OrganizationSection implements Section {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof OrganizationSection)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         OrganizationSection that = (OrganizationSection) o;
         return Objects.equals(list, that.list);
     }

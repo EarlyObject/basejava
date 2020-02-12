@@ -8,15 +8,14 @@ public class Organization {
     private String url;
     private final List<TimeInterval> timeIntervalList;
 
+    public Organization(String name, List<TimeInterval> timeIntervalList) {
+        this(name, null, timeIntervalList);
+    }
+
     public Organization(String name, String url, List<TimeInterval> timeIntervalList) {
         this.name = Objects.requireNonNull(name);
         this.url = url;
         this.timeIntervalList = Objects.requireNonNull(timeIntervalList);
-    }
-
-    public Organization(String name, List<TimeInterval> timeIntervalList) {
-        this.name = Objects.requireNonNull(name);
-        this.timeIntervalList = timeIntervalList;
     }
 
     @Override
@@ -37,7 +36,7 @@ public class Organization {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Organization)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Organization that = (Organization) o;
         return Objects.equals(name, that.name) &&
                 Objects.equals(url, that.url) &&

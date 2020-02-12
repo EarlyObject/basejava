@@ -25,7 +25,7 @@ public class MainResume {
         TextSection objective = new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
         TextSection personal = new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры.");
 
-        List<String> achievementsList = new ArrayList();
+        List<String> achievementsList = new ArrayList<>();
         ListSection achievement = new ListSection(achievementsList);
 
         achievementsList.add("С 2013 года: разработка проектов \"Разработка Web приложения\",\"Java Enterprise\", " +
@@ -76,9 +76,9 @@ public class MainResume {
         Organization jop = new Organization("Java Online Projects", "http://javaops.ru/", jopTI);
 
         TimeInterval tWrike = new TimeInterval(LocalDate.of(2014, 10, 1), LocalDate.of(2016, 1, 1));
+        tWrike.setPosition("Старший разработчик (backend)");
         tWrike.setDescription("Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
                 "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
-        tWrike.setPosition("Старший разработчик (backend)");
         List<TimeInterval> wrikeTI = new ArrayList<>();
         wrikeTI.add(tWrike);
         Organization wrike = new Organization("Wrike", "https://www.wrike.com/", wrikeTI);
@@ -146,33 +146,33 @@ public class MainResume {
         OrganizationSection education = new OrganizationSection(educationList);
         TimeInterval tCoursera = new TimeInterval(LocalDate.of(2013, 3, 1),
                 LocalDate.of(2013, 5, 1));
-        tCoursera.setDescription("\"Functional Programming Principles in Scala\" by Martin Odersky");
+        tCoursera.setPosition("\"Functional Programming Principles in Scala\" by Martin Odersky");
         List<TimeInterval> courseraTI = new ArrayList<>();
         courseraTI.add(tCoursera);
         Organization coursera = new Organization("Coursera", "https://www.coursera.org/course/progfun", courseraTI);
 
         TimeInterval teLuxoft = new TimeInterval(LocalDate.of(2011, 3, 1), LocalDate.of(2011, 4, 1));
-        teLuxoft.setDescription("Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"");
+        teLuxoft.setPosition("Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"");
         List<TimeInterval> eluxoftTI = new ArrayList<>();
         eluxoftTI.add(teLuxoft);
         Organization eLuxoft = new Organization("Luxoft", "http://www.luxoft-training.ru/training/catalog/course.html?ID=22366", eluxoftTI);
 
         TimeInterval teSiemens = new TimeInterval(LocalDate.of(2005, 1, 1), LocalDate.of(2005, 4, 1));
-        teLuxoft.setDescription("3 месяца обучения мобильным IN сетям (Берлин)");
+        teLuxoft.setPosition("3 месяца обучения мобильным IN сетям (Берлин)");
         List<TimeInterval> eSiemensTI = new ArrayList<>();
         eSiemensTI.add(teSiemens);
         Organization eSiemens = new Organization("Siemens AG", "http://www.siemens.ru/", eSiemensTI);
 
         TimeInterval teAlcatel = new TimeInterval(LocalDate.of(1997, 9, 1), LocalDate.of(1998, 3, 1));
-        teAlcatel.setDescription("6 месяцев обучения цифровым телефонным сетям (Москва)");
+        teAlcatel.setPosition("6 месяцев обучения цифровым телефонным сетям (Москва)");
         List<TimeInterval> eAlcatelTI = new ArrayList<>();
         eAlcatelTI.add(teAlcatel);
         Organization eAlcatel = new Organization("Alcatel", "http://www.alcatel.ru/", eAlcatelTI);
 
         TimeInterval tSpniu = new TimeInterval(LocalDate.of(1993, 9, 1), LocalDate.of(1996, 7, 1));
-        tSpniu.setDescription("Аспирантура (программист С, С++)");
+        tSpniu.setPosition("Аспирантура (программист С, С++)");
         TimeInterval tSpniu2 = new TimeInterval(LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1));
-        tSpniu2.setDescription("Инженер (программист Fortran, C)");
+        tSpniu2.setPosition("Инженер (программист Fortran, C)");
         List<TimeInterval> spniuTI = new ArrayList<>();
         spniuTI.add(tSpniu);
         spniuTI.add(tSpniu2);
@@ -181,7 +181,7 @@ public class MainResume {
                 spniuTI);
 
         TimeInterval tZFTS = new TimeInterval(LocalDate.of(1984, 9, 1), LocalDate.of(1987, 6, 1));
-        tZFTS.setDescription("Закончил с отличием");
+        tZFTS.setPosition("Закончил с отличием");
         List<TimeInterval> zftsTI = new ArrayList<>();
         zftsTI.add(tZFTS);
         Organization zfts = new Organization("Заочная физико-техническая школа при МФТИ", "http://www.school.mipt.ru/", zftsTI);
@@ -206,7 +206,7 @@ public class MainResume {
         for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
             System.out.println(entry.getKey() + " " + entry.getValue());
         }
-
+        System.out.println();
         for (Map.Entry<SectionType, Section> entry : sections.entrySet()) {
             System.out.println(entry.getKey());
             System.out.println(entry.getValue());

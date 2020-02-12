@@ -30,23 +30,24 @@ public class TimeInterval {
                 "-" +
                 end.format(formatter) +
                 " " +
-                (position != null ? position : "") +
+                position +
                 System.lineSeparator() +
-                description;
+                (description != null ? description : "");
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof TimeInterval)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         TimeInterval that = (TimeInterval) o;
         return Objects.equals(begin, that.begin) &&
                 Objects.equals(end, that.end) &&
+                Objects.equals(position, that.position) &&
                 Objects.equals(description, that.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(begin, end, description);
+        return Objects.hash(begin, end, position, description);
     }
 }
