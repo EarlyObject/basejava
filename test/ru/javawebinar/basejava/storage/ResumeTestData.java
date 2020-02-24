@@ -2,17 +2,24 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.*;
 
-import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class MainResume {
-    public static void main(String[] args) {
-        Resume testResume = new Resume("Григорий Кислин");
+import static ru.javawebinar.basejava.util.DateUtil.of;
 
-        Map<ContactType, String> contacts = testResume.getContacts();
-        Map<SectionType, Section> sections = testResume.getSections();
+public class ResumeTestData {
+    static Resume resume1 = new Resume("uuid1", "Григорий Кислин");
+    static Resume resume2 = new Resume("uuid2", "Frank Lampard");
+    static Resume resume3 = new Resume("uuid3", "Антон Чехов");
+    static Resume resume4 = new Resume("uuid4", "Петр Чех");
+
+
+    public static void main(String[] args) {
+
+        Map<ContactType, String> contacts = resume1.getContacts();
+        Map<SectionType, Section> sections = resume1.getSections();
 
         contacts.put(ContactType.PHONE_NUMBER, "+7(921) 855-0482");
         contacts.put(ContactType.SKYPE, "grigory.kislin");
@@ -67,15 +74,15 @@ public class MainResume {
 
         List<Organization> experienceList = new ArrayList<>();
         OrganizationSection experience = new OrganizationSection(experienceList);
-        TimeInterval tJop = new TimeInterval(LocalDate.of(2013, 10, 1),
-                LocalDate.of(2020, 2, 1));
+        TimeInterval tJop = new TimeInterval(of(2013, Month.OCTOBER),
+                of(2020, Month.FEBRUARY));
         tJop.setPosition("Автор проекта.");
         tJop.setDescription("Создание, организация и проведение Java онлайн проектов и стажировок.");
         List<TimeInterval> jopTI = new ArrayList<>();
         jopTI.add(tJop);
         Organization jop = new Organization("Java Online Projects", "http://javaops.ru/", jopTI);
 
-        TimeInterval tWrike = new TimeInterval(LocalDate.of(2014, 10, 1), LocalDate.of(2016, 1, 1));
+        TimeInterval tWrike = new TimeInterval(of(2014, Month.OCTOBER), of(2016, Month.JANUARY));
         tWrike.setPosition("Старший разработчик (backend)");
         tWrike.setDescription("Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). " +
                 "Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.");
@@ -83,7 +90,7 @@ public class MainResume {
         wrikeTI.add(tWrike);
         Organization wrike = new Organization("Wrike", "https://www.wrike.com/", wrikeTI);
 
-        TimeInterval tRit = new TimeInterval(LocalDate.of(2012, 4, 1), LocalDate.of(2014, 10, 1));
+        TimeInterval tRit = new TimeInterval(of(2012, Month.APRIL), of(2014, Month.OCTOBER));
         tRit.setPosition("Java архитектор");
         tRit.setDescription("Организация процесса разработки системы ERP для разных окружений: релизная политика, версионирование, " +
                 "ведение CI (Jenkins), миграция базы (кастомизация Flyway), конфигурирование системы (pgBoucer, Nginx), AAA via SSO. " +
@@ -95,7 +102,7 @@ public class MainResume {
         ritTI.add(tRit);
         Organization rit = new Organization("RIT Center", ritTI);
 
-        TimeInterval tLuxoft = new TimeInterval(LocalDate.of(2010, 1, 1), LocalDate.of(2012, 4, 1));
+        TimeInterval tLuxoft = new TimeInterval(of(2010, Month.JANUARY), of(2012, Month.APRIL));
         tLuxoft.setPosition("Ведущий программист");
         tLuxoft.setDescription("Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, SmartGWT, GWT, Jasper, Oracle). " +
                 "Реализация клиентской и серверной части CRM. Реализация RIA-приложения для администрирования, мониторинга и анализа результатов " +
@@ -104,7 +111,7 @@ public class MainResume {
         luxoftTI.add(tLuxoft);
         Organization luxoft = new Organization("Luxoft (Deutsche Bank)", "http://www.luxoft.ru/", luxoftTI);
 
-        TimeInterval tYota = new TimeInterval(LocalDate.of(2008, 6, 1), LocalDate.of(2010, 12, 1));
+        TimeInterval tYota = new TimeInterval(of(2008, Month.JUNE), of(2010, Month.DECEMBER));
         tYota.setPosition("Ведущий специалист");
         tYota.setDescription("Дизайн и имплементация Java EE фреймворка для отдела \"Платежные Системы\" (GlassFish v2.1, v3, OC4J, EJB3, JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS, Maven2). " +
                 "Реализация администрирования, статистики и мониторинга фреймворка. Разработка online JMX клиента (Python/ Jython, Django, ExtJS)");
@@ -112,21 +119,21 @@ public class MainResume {
         yotaTI.add(tYota);
         Organization yota = new Organization("Yota", "https://www.yota.ru/", yotaTI);
 
-        TimeInterval tEnkata = new TimeInterval(LocalDate.of(2007, 3, 1), LocalDate.of(2010, 12, 1));
+        TimeInterval tEnkata = new TimeInterval(of(2007, Month.MARCH), of(2010, Month.DECEMBER));
         tEnkata.setPosition("Разработчик ПО");
         tEnkata.setDescription("Реализация клиентской (Eclipse RCP) и серверной (JBoss 4.2, Hibernate 3.0, Tomcat, JMS) частей кластерного J2EE приложения (OLAP, Data mining).");
         List<TimeInterval> enkataTI = new ArrayList<>();
         enkataTI.add(tEnkata);
         Organization enkata = new Organization("Enkata", "http://enkata.com/", enkataTI);
 
-        TimeInterval tSiemens = new TimeInterval(LocalDate.of(2005, 1, 1), LocalDate.of(2007, 2, 1));
+        TimeInterval tSiemens = new TimeInterval(of(2005, Month.JANUARY), of(2007, Month.FEBRUARY));
         tSiemens.setPosition("Разработчик ПО");
         tSiemens.setDescription("Разработка информационной модели, проектирование интерфейсов, реализация и отладка ПО на мобильной IN платформе Siemens @vantage (Java, Unix).");
         List<TimeInterval> siemensTI = new ArrayList<>();
         siemensTI.add(tSiemens);
         Organization siemens = new Organization("Siemens AG", "https://www.siemens.com/ru/ru/home.html", siemensTI);
 
-        TimeInterval tAlcatel = new TimeInterval(LocalDate.of(1997, 9, 1), LocalDate.of(2005, 1, 1));
+        TimeInterval tAlcatel = new TimeInterval(of(1997, Month.SEPTEMBER), of(2005, Month.JANUARY));
         tAlcatel.setPosition("Инженер по аппаратному и программному тестированию");
         tAlcatel.setDescription("Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM).");
         List<TimeInterval> alcatelTI = new ArrayList<>();
@@ -144,34 +151,34 @@ public class MainResume {
 
         List<Organization> educationList = new ArrayList<>();
         OrganizationSection education = new OrganizationSection(educationList);
-        TimeInterval tCoursera = new TimeInterval(LocalDate.of(2013, 3, 1),
-                LocalDate.of(2013, 5, 1));
+        TimeInterval tCoursera = new TimeInterval(of(2013, Month.MARCH),
+                of(2013, Month.MAY));
         tCoursera.setPosition("\"Functional Programming Principles in Scala\" by Martin Odersky");
         List<TimeInterval> courseraTI = new ArrayList<>();
         courseraTI.add(tCoursera);
         Organization coursera = new Organization("Coursera", "https://www.coursera.org/course/progfun", courseraTI);
 
-        TimeInterval teLuxoft = new TimeInterval(LocalDate.of(2011, 3, 1), LocalDate.of(2011, 4, 1));
+        TimeInterval teLuxoft = new TimeInterval(of(2011, Month.MARCH), of(2011, Month.APRIL));
         teLuxoft.setPosition("Курс \"Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.\"");
         List<TimeInterval> eluxoftTI = new ArrayList<>();
         eluxoftTI.add(teLuxoft);
         Organization eLuxoft = new Organization("Luxoft", "http://www.luxoft-training.ru/training/catalog/course.html?ID=22366", eluxoftTI);
 
-        TimeInterval teSiemens = new TimeInterval(LocalDate.of(2005, 1, 1), LocalDate.of(2005, 4, 1));
+        TimeInterval teSiemens = new TimeInterval(of(2005, Month.JANUARY), of(2005, Month.APRIL));
         teLuxoft.setPosition("3 месяца обучения мобильным IN сетям (Берлин)");
         List<TimeInterval> eSiemensTI = new ArrayList<>();
         eSiemensTI.add(teSiemens);
         Organization eSiemens = new Organization("Siemens AG", "http://www.siemens.ru/", eSiemensTI);
 
-        TimeInterval teAlcatel = new TimeInterval(LocalDate.of(1997, 9, 1), LocalDate.of(1998, 3, 1));
+        TimeInterval teAlcatel = new TimeInterval(of(1997, Month.SEPTEMBER), of(1998, Month.MARCH));
         teAlcatel.setPosition("6 месяцев обучения цифровым телефонным сетям (Москва)");
         List<TimeInterval> eAlcatelTI = new ArrayList<>();
         eAlcatelTI.add(teAlcatel);
         Organization eAlcatel = new Organization("Alcatel", "http://www.alcatel.ru/", eAlcatelTI);
 
-        TimeInterval tSpniu = new TimeInterval(LocalDate.of(1993, 9, 1), LocalDate.of(1996, 7, 1));
+        TimeInterval tSpniu = new TimeInterval(of(1993, Month.SEPTEMBER), of(1996, Month.JULY));
         tSpniu.setPosition("Аспирантура (программист С, С++)");
-        TimeInterval tSpniu2 = new TimeInterval(LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1));
+        TimeInterval tSpniu2 = new TimeInterval(of(1987, Month.SEPTEMBER), of(1993, Month.JULY));
         tSpniu2.setPosition("Инженер (программист Fortran, C)");
         List<TimeInterval> spniuTI = new ArrayList<>();
         spniuTI.add(tSpniu);
@@ -180,7 +187,7 @@ public class MainResume {
                 "http://www.ifmo.ru/",
                 spniuTI);
 
-        TimeInterval tZFTS = new TimeInterval(LocalDate.of(1984, 9, 1), LocalDate.of(1987, 6, 1));
+        TimeInterval tZFTS = new TimeInterval(of(1984, Month.SEPTEMBER), of(1987, Month.JUNE));
         tZFTS.setPosition("Закончил с отличием");
         List<TimeInterval> zftsTI = new ArrayList<>();
         zftsTI.add(tZFTS);
@@ -200,16 +207,180 @@ public class MainResume {
         sections.put(SectionType.EXPERIENCE, experience);
         sections.put(SectionType.EDUCATION, education);
 
-        System.out.println(testResume.getFullName());
+
+        Map<ContactType, String> contacts2 = resume2.getContacts();
+        Map<SectionType, Section> sections2 = resume2.getSections();
+
+        contacts2.put(ContactType.PHONE_NUMBER, "+7(777) 777-7777");
+        contacts2.put(ContactType.SKYPE, "frank.lampard");
+        contacts2.put(ContactType.EMAIL, "frank@gmail.com");
+        contacts2.put(ContactType.LINKEDIN_PROFILE, "https://www.linkedin.com/in/flampard");
+        contacts2.put(ContactType.GITHUB_PROFILE, "https://github.com/flampard");
+        contacts2.put(ContactType.STACKOVERFLOW_PROFILE, "https://stackoverflow.com/users/777777");
+        contacts2.put(ContactType.WEBPAGE, "http://lampard.com");
+
+        TextSection objective2 = new TextSection("Тренер футбольной команды");
+        TextSection personal2 = new TextSection("Аналитический склад ума, сильная логика, дисциплина, воля, характер. Лидер по рождению.");
+
+        List<String> achievementsList2 = new ArrayList<>();
+        ListSection achievement2 = new ListSection(achievementsList2);
+
+        achievementsList2.add("Чемпионат Англии 2005. Лига Чемпионов. Кубок Англии много раз");
+        achievementsList2.add("Многократно признавался игроком месяца, Лучшим игроком года");
+
+        List<String> qualificationsList2 = new ArrayList<>();
+        ListSection qualifications2 = new ListSection(qualificationsList2);
+
+        qualificationsList2.add("Центральный полузащитник");
+        qualificationsList2.add("Атакующий полузащитник");
+        qualificationsList2.add("Диспетчер");
+
+        List<Organization> experienceList2 = new ArrayList<>();
+        OrganizationSection experience2 = new OrganizationSection(experienceList2);
+        TimeInterval tChelsea = new TimeInterval(of(2000, Month.JANUARY),
+                of(2012, Month.JUNE));
+        tChelsea.setPosition("Член футбольной команды");
+        tChelsea.setDescription("Игра в центре поля в связке с другими центраравами");
+        List<TimeInterval> chelseaTI = new ArrayList<>();
+        chelseaTI.add(tChelsea);
+        Organization chelseaFC = new Organization("Chelsea Futboll club", "http://chelsea.com/", chelseaTI);
+
+        TimeInterval tWestHam = new TimeInterval(of(1998, Month.JANUARY), of(1999, Month.DECEMBER));
+        tWestHam.setPosition("Стажер в Академии ФК ВестХэм");
+        tWestHam.setDescription("Участие в юношеских турнирах УЕФА");
+        List<TimeInterval> westHamTI = new ArrayList<>();
+        westHamTI.add(tWestHam);
+        Organization westHam = new Organization("WestHam FC", "https://www.westham.com/", westHamTI);
+
+        experienceList2.add(chelseaFC);
+        experienceList2.add(westHam);
+
+        List<Organization> educationList2 = new ArrayList<>();
+        OrganizationSection education2 = new OrganizationSection(educationList2);
+
+        TimeInterval tBrantford = new TimeInterval(of(1998, Month.JANUARY),
+                of(1998, Month.AUGUST));
+        tBrantford.setPosition("Школа ударов с двух ног");
+        List<TimeInterval> brantfordTI = new ArrayList<>();
+        brantfordTI.add(tBrantford);
+        Organization brantford = new Organization("Brantford FC", "https://www.brantford.com", brantfordTI);
+
+        TimeInterval tNorwich = new TimeInterval(of(1995, Month.FEBRUARY), of(1997, Month.DECEMBER));
+        tNorwich.setPosition("Основы юношеского футбола");
+        List<TimeInterval> norwichTI = new ArrayList<>();
+        norwichTI.add(tNorwich);
+        Organization norwich = new Organization("Norwich FC", "http://www.norwich.com", norwichTI);
+
+        educationList2.add(brantford);
+        educationList2.add(norwich);
+
+        sections2.put(SectionType.OBJECTIVE, objective2);
+        sections2.put(SectionType.PERSONAL, personal2);
+        sections2.put(SectionType.ACHIEVEMENT, achievement2);
+        sections2.put(SectionType.QUALIFICATIONS, qualifications2);
+        sections2.put(SectionType.EXPERIENCE, experience2);
+        sections2.put(SectionType.EDUCATION, education2);
+
+        System.out.println(resume2.getFullName());
         System.out.println();
 
-        for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
+        for (Map.Entry<ContactType, String> entry : contacts2.entrySet()) {
             System.out.println(entry.getKey() + " " + entry.getValue());
         }
         System.out.println();
-        for (Map.Entry<SectionType, Section> entry : sections.entrySet()) {
+        for (Map.Entry<SectionType, Section> entry : sections2.entrySet()) {
             System.out.println(entry.getKey());
             System.out.println(entry.getValue());
         }
+
+
+        Map<ContactType, String> contacts3 = resume3.getContacts();
+        Map<SectionType, Section> sections3 = resume3.getSections();
+
+        contacts3.put(ContactType.PHONE_NUMBER, "+7(999) 999-9999");
+        contacts3.put(ContactType.SKYPE, "anton.chekhov");
+        contacts3.put(ContactType.EMAIL, "achekhov@gmail.com");
+        contacts3.put(ContactType.LINKEDIN_PROFILE, "https://www.linkedin.com/in/achekhov");
+        contacts3.put(ContactType.GITHUB_PROFILE, "https://github.com/achekhov");
+        contacts3.put(ContactType.STACKOVERFLOW_PROFILE, "https://stackoverflow.com/users/99999");
+        contacts3.put(ContactType.WEBPAGE, "http://chekhov.com");
+
+        TextSection objective3 = new TextSection("Сценарист");
+        TextSection personal3 = new TextSection("Альтруизм, нестандартное мышление, ироничность, краткость, креативность.");
+
+        List<String> achievementsList3 = new ArrayList<>();
+        ListSection achievement3 = new ListSection(achievementsList3);
+
+        achievementsList3.add("Руководитель проекта — три школы в Талеже, Новоселках и Мелихове");
+        achievementsList3.add("Признанный литератор");
+
+        List<String> qualificationsList3 = new ArrayList<>();
+        ListSection qualifications3 = new ListSection(qualificationsList3);
+
+        qualificationsList3.add("Журналист-фрилансер");
+        qualificationsList3.add("Репетитор по русскому языку");
+        qualificationsList3.add("Врач-практикант");
+
+        List<Organization> experienceList3 = new ArrayList<>();
+        OrganizationSection experience3 = new OrganizationSection(experienceList3);
+        TimeInterval tLiterator = new TimeInterval(of(1896, Month.JANUARY),
+                of(1898, Month.DECEMBER));
+        tLiterator.setPosition("Литератор — Мелихово");
+        tLiterator.setDescription("Творческая деятельность на природе, работа над произведениями «Палата №6»," +
+                " «Человек в футляре», «Ионыч», «Чайка» и «Дядя Ваня» и др.");
+        List<TimeInterval> literatorTI = new ArrayList<>();
+        literatorTI.add(tLiterator);
+        Organization literator = new Organization("Мелихово", "http://melikhovo.com/", literatorTI);
+
+        TimeInterval tGazeta = new TimeInterval(of(1886, Month.JANUARY), of(1898, Month.DECEMBER));
+        tGazeta.setPosition("Фельетонист — Петербург, газета «Новое время».");
+        tGazeta.setDescription("Удаленная работа, написание «субботников».");
+        List<TimeInterval> gazetaTI = new ArrayList<>();
+        gazetaTI.add(tGazeta);
+        Organization gazeta = new Organization("Новое время", "https://www.new-time.ru/", gazetaTI);
+
+        experienceList3.add(literator);
+        experienceList3.add(gazeta);
+
+        List<Organization> educationList3 = new ArrayList<>();
+        OrganizationSection education3 = new OrganizationSection(educationList3);
+
+        TimeInterval tMGU = new TimeInterval(of(1879, Month.SEPTEMBER),
+                of(1884, Month.JUNE));
+        tMGU.setPosition("Московский университет (МГУ), медицинский факультет.");
+        List<TimeInterval> mguTI = new ArrayList<>();
+        mguTI.add(tMGU);
+        Organization mgu = new Organization("Московский университет (МГУ)", "https://www.mgu.ru", mguTI);
+
+        TimeInterval tTaganrog = new TimeInterval(of(1867, Month.SEPTEMBER), of(1879, Month.MAY));
+        tTaganrog.setPosition("Таганрогская мужская гимназия. Школьный курс");
+        List<TimeInterval> taganrogTI = new ArrayList<>();
+        taganrogTI.add(tTaganrog);
+        Organization taganrog = new Organization("Таганрогская мужская классическая гимназия.", "http://www.tgnr.ru", taganrogTI);
+
+        educationList3.add(mgu);
+        educationList3.add(taganrog);
+
+        sections3.put(SectionType.OBJECTIVE, objective3);
+        sections3.put(SectionType.PERSONAL, personal3);
+        sections3.put(SectionType.ACHIEVEMENT, achievement3);
+        sections3.put(SectionType.QUALIFICATIONS, qualifications3);
+        sections3.put(SectionType.EXPERIENCE, experience3);
+        sections3.put(SectionType.EDUCATION, education3);
+
+        System.out.println(resume3.getFullName());
+        System.out.println();
+
+        for (Map.Entry<ContactType, String> entry : contacts3.entrySet()) {
+            System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+        System.out.println();
+        for (Map.Entry<SectionType, Section> entry : sections3.entrySet()) {
+            System.out.println(entry.getKey());
+            System.out.println(entry.getValue());
+        }
+
     }
+
+
 }

@@ -20,15 +20,15 @@ public abstract class AbstractStorageTest {
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
 
-    private static final String fullName1 = "Frank Lampard";
-    private static final String fullName2 = "John Terry";
-    private static final String fullName3 = "Didier Drogba";
-    private static final String fullName4 = "Peter Chech";
+    private static final String fullName1 = "Григорий Кислин";
+    private static final String fullName2 = "Frank Lampard";
+    private static final String fullName3 = "Антон Чехов";
+    private static final String fullName4 = "Петр Чех";
 
-    private static final Resume RESUME_1 = new Resume(UUID_1, fullName1);
-    private static final Resume RESUME_2 = new Resume(UUID_2, fullName2);
-    private static final Resume RESUME_3 = new Resume(UUID_3, fullName3);
-    private static final Resume RESUME_4 = new Resume(UUID_4, fullName4);
+    private static final Resume RESUME_1 = ResumeTestData.resume1;
+    private static final Resume RESUME_2 = ResumeTestData.resume2;
+    private static final Resume RESUME_3 = ResumeTestData.resume3;
+    private static final Resume RESUME_4 = ResumeTestData.resume4;
 
     protected AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -103,9 +103,9 @@ public abstract class AbstractStorageTest {
     public void getAllSortedTest() {
         List<Resume> sortedList = storage.getAllSorted();
         List<Resume> test2 = new ArrayList<>();
+        test2.add(RESUME_2);
         test2.add(RESUME_3);
         test2.add(RESUME_1);
-        test2.add(RESUME_2);
         assertEquals(test2, sortedList);
         assertEquals(3, sortedList.size());
     }
