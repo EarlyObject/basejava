@@ -10,10 +10,17 @@ import java.util.Map;
 import static ru.javawebinar.basejava.util.DateUtil.of;
 
 public class ResumeTestData {
-    static Resume resume1 = new Resume("uuid1", "Григорий Кислин");
-    static Resume resume2 = new Resume("uuid2", "Frank Lampard");
-    static Resume resume3 = new Resume("uuid3", "Антон Чехов");
-    static Resume resume4 = new Resume("uuid4", "Петр Чех");
+    public static Resume resume1;
+    public static Resume resume2;
+    public static Resume resume3;
+    public static Resume resume4;
+
+    static {
+        resume1 = new Resume("uuid1", "Григорий Кислин");
+        resume2 = new Resume("uuid2", "Frank Lampard");
+        resume3 = new Resume("uuid3", "Антон Чехов");
+        resume4 = new Resume("uuid4", "Петр Чех");
+    }
 
 
     public static void main(String[] args) {

@@ -12,7 +12,7 @@ import java.util.Objects;
 public abstract class AbstractFileStorage extends AbstractStorage<File> {
     private File directory;
 
-    public AbstractFileStorage(File directory) {
+    protected AbstractFileStorage(File directory) {
         Objects.requireNonNull(directory, "directory must not be null");
         if (!directory.isDirectory()) {
             throw new IllegalArgumentException(directory.getAbsolutePath() + " is not directory");
@@ -26,40 +26,39 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     protected void saveImpl(File file, Resume resume) {
         try {
             file.createNewFile();
-            doWrite(resume, file);
         } catch (IOException e) {
-            throw new StorageException("IO error", file.getName(), e);
+            throw new StorageException("Create operation error", file.getName(), e);
         }
+        updateImpl(file, resume);
     }
 
     protected abstract void doWrite(Resume resume, File file) throws IOException;
 
     @Override
     protected Resume getImpl(File file) {
-        Resume resume;
         try {
-            resume = doRead(file);
+            return doRead(file);
         } catch (IOException e) {
-            throw new StorageException("IO error", file.getName(), e);
+            throw new StorageException("Read operation error", file.getName(), e);
         }
-        return resume;
     }
 
     protected abstract Resume doRead(File file) throws IOException;
-
 
     @Override
     protected void updateImpl(File file, Resume resume) {
         try {
             doWrite(resume, file);
         } catch (IOException e) {
-            throw new StorageException("IO error", file.getName(), e);
+            throw new StorageException("Update operation error", file.getName(), e);
         }
     }
 
     @Override
     protected void deleteImpl(File file) {
-        file.delete();
+        if (!file.delete()) {
+            throw new StorageException("Delete operation failed", file.getName());
+        }
     }
 
     @Override
@@ -75,11 +74,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected List<Resume> getAll() {
         List<Resume> returnValue = new ArrayList<>();
-        for (File file : Objects.requireNonNull(directory.listFiles())) {
-            try {
-                returnValue.add(doRead(file));
-            } catch (IOException e) {
-                throw new StorageException("IO error", file.getName(), e);
+        if (directory == null) {
+            throw new StorageException("Directory is null", null);
+        } else {
+            for (File file : Objects.requireNonNull(directory.listFiles())) {
+                returnValue.add(getImpl(file));
             }
         }
         return returnValue;
@@ -87,13 +86,20 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public int size() {
-        return (int) directory.getTotalSpace();
+        if (directory == null) {
+            throw new StorageException("Directory is null", null);
+        }
+        return Objects.requireNonNull(directory.list()).length;
     }
 
     @Override
     public void clear() {
-        for (File file : Objects.requireNonNull(directory.listFiles())) {
-            file.delete();
+        if (directory == null) {
+            throw new StorageException("Directory is null", null);
+        } else {
+            for (File file : Objects.requireNonNull(directory.listFiles())) {
+                deleteImpl(file);
+            }
         }
     }
 }
