@@ -74,7 +74,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected List<Resume> getAll() {
         List<Resume> returnValue = new ArrayList<>();
-        if (directory == null) {
+        if (directory.listFiles() == null) {
             throw new StorageException("Directory is null", null);
         } else {
             for (File file : Objects.requireNonNull(directory.listFiles())) {
@@ -86,15 +86,15 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     public int size() {
-        if (directory == null) {
+        if (directory.list() == null) {
             throw new StorageException("Directory is null", null);
         }
-        return Objects.requireNonNull(directory.list()).length;
+        return directory.list().length;
     }
 
     @Override
     public void clear() {
-        if (directory == null) {
+        if (directory.listFiles() == null) {
             throw new StorageException("Directory is null", null);
         } else {
             for (File file : Objects.requireNonNull(directory.listFiles())) {
