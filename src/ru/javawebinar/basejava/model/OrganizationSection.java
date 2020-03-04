@@ -3,11 +3,12 @@ package ru.javawebinar.basejava.model;
 import java.util.List;
 import java.util.Objects;
 
-public class OrganizationSection implements Section {
+public class OrganizationSection extends Section {
+    private static final long serialVersionUID = 7200816666469065584L;
     private final List<Organization> list;
 
     public OrganizationSection(List<Organization> list) {
-        this.list = Objects.requireNonNull(list);
+        this.list = Objects.requireNonNull(list, "organizations must not be null");
     }
 
     public List<Organization> getList() {

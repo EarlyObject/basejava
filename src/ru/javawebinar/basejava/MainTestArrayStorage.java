@@ -20,13 +20,10 @@ public class MainTestArrayStorage {
         printAll();
 
 
-
         ARRAY_STORAGE.save(r3);
         ARRAY_STORAGE.save(r2);
         ARRAY_STORAGE.delete(r5.getUuid());
         printAll();
-
-
 
 
         System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));

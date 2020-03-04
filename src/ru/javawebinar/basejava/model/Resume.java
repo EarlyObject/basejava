@@ -1,12 +1,17 @@
 package ru.javawebinar.basejava.model;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
 
-public class Resume {
-    private String fullName;
-    private String uuid;
+public class Resume implements Serializable {
+    private static final long serialVersionUID = 3758858439361714174L;
     protected Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
     protected Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
+    private String fullName;
+    private String uuid;
 
     public Resume(String fullName) {
         this(UUID.randomUUID().toString(), fullName);

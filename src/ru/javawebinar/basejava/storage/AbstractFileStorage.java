@@ -3,8 +3,7 @@ package ru.javawebinar.basejava.storage;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -32,23 +31,23 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         updateImpl(file, resume);
     }
 
-    protected abstract void doWrite(Resume resume, File file) throws IOException;
+    protected abstract void doWrite(Resume resume, OutputStream file) throws IOException;
 
     @Override
     protected Resume getImpl(File file) {
         try {
-            return doRead(file);
+            return doRead(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("Read operation error", file.getName(), e);
         }
     }
 
-    protected abstract Resume doRead(File file) throws IOException;
+    protected abstract Resume doRead(InputStream file) throws IOException;
 
     @Override
     protected void updateImpl(File file, Resume resume) {
         try {
-            doWrite(resume, file);
+            doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
         } catch (IOException e) {
             throw new StorageException("Update operation error", file.getName(), e);
         }
