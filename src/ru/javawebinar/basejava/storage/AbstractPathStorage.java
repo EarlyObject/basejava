@@ -3,47 +3,43 @@ package ru.javawebinar.basejava.storage;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
-public abstract class AbstractPathStorage extends AbstractStorage<Path> {
+public class AbstractPathStorage extends FilePathContext<Path> {
     private Path directory;
 
     protected AbstractPathStorage(String dir) {
-        directory = Paths.get(dir);
-        Objects.requireNonNull(directory, "directory must not be null");
-        if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
-            throw new IllegalArgumentException(dir + " is not directory or is not writable");
-        }
+        super(Paths.get(dir).toFile());
     }
 
+    @Override
     protected void saveImpl(Path path, Resume resume) {
-        File file = path.toFile();
-        updateImpl(file.toPath(), resume);
+        Path file;
+        try {
+            file = Files.createFile(path);
+        } catch (IOException e) {
+            throw new StorageException("Save operation error", path.toString(), e);
+        }
+        updateImpl(file, resume);
     }
-
-    protected abstract void doWrite(Resume resume, OutputStream outputStream) throws IOException;
 
     @Override
     protected Resume getImpl(Path path) {
         try {
-            return doRead(new BufferedInputStream(new FileInputStream(path.toString())));
+            return objectStream.doRead(Files.newInputStream(path));
         } catch (IOException e) {
             throw new StorageException("Read operation error", path.toString(), e);
         }
     }
 
-    protected abstract Resume doRead(InputStream inputStream) throws IOException;
-
     @Override
     protected void updateImpl(Path path, Resume resume) {
         try {
-            doWrite(resume, new BufferedOutputStream(new FileOutputStream(path.toString())));
+            objectStream.doWrite(resume, Files.newOutputStream(path));
         } catch (IOException e) {
             throw new StorageException("Update operation error", path.toString(), e);
         }
@@ -52,17 +48,19 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected void deleteImpl(Path path) {
         try {
-            if (!Files.deleteIfExists(path)) {
-                throw new StorageException("Delete operation failed", path.toString());
-            }
+            Files.deleteIfExists(path);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new StorageException("Delete operation failed", path.toString());
         }
     }
 
     @Override
-    protected Path getSearchKey(String uuid) {
-        return new File(directory.toString(), uuid).toPath();
+    protected Path getSearchKey(String uid) {
+        try {
+            return Files.createFile(directory.resolve(uid));
+        } catch (IOException e) {
+            throw new StorageException("Search operation failed", uid);
+        }
     }
 
     @Override
@@ -71,33 +69,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     }
 
     @Override
-    protected List<Resume> getAll() {
-        List<Resume> returnValue = new ArrayList<>();
-        File[] files = directory.toFile().listFiles();
-        if (files == null) {
-            throw new StorageException("Directory is null", null);
-        }
-        for (File file : files) {
-            returnValue.add(getImpl(file.toPath()));
-        }
-        return returnValue;
-    }
-
-    @Override
-    public int size() {
-        String[] list = directory.toFile().list();
-        if (list == null) {
-            throw new StorageException("Directory is null", null);
-        }
-        return list.length;
-    }
-
-    @Override
-    public void clear() {
-        try {
-            Files.list(directory).forEach(this::deleteImpl);
-        } catch (IOException e) {
-            throw new StorageException("Delete error", null);
-        }
+    protected Path converter(File file) {
+        return file.toPath();
     }
 }

@@ -4,22 +4,12 @@ import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.nio.file.Files;
 
-public abstract class AbstractFileStorage extends AbstractStorage<File> {
-    private File directory;
+public class AbstractFileStorage<SK> extends FilePathContext<File> {
 
     protected AbstractFileStorage(File directory) {
-        Objects.requireNonNull(directory, "directory must not be null");
-        if (!directory.isDirectory()) {
-            throw new IllegalArgumentException(directory.getAbsolutePath() + " is not directory");
-        }
-        if (!directory.canRead() || !directory.canWrite()) {
-            throw new IllegalArgumentException(directory.getAbsolutePath() + " is not readable/writable");
-        }
-        this.directory = directory;
+        super(directory);
     }
 
     protected void saveImpl(File file, Resume resume) {
@@ -31,23 +21,19 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         updateImpl(file, resume);
     }
 
-    protected abstract void doWrite(Resume resume, OutputStream file) throws IOException;
-
     @Override
     protected Resume getImpl(File file) {
         try {
-            return doRead(new BufferedInputStream(new FileInputStream(file)));
+            return objectStream.doRead(Files.newInputStream(file.toPath()));
         } catch (IOException e) {
             throw new StorageException("Read operation error", file.getName(), e);
         }
     }
 
-    protected abstract Resume doRead(InputStream file) throws IOException;
-
     @Override
     protected void updateImpl(File file, Resume resume) {
         try {
-            doWrite(resume, new BufferedOutputStream(new FileOutputStream(file)));
+            objectStream.doWrite(resume, Files.newOutputStream(file.toPath()));
         } catch (IOException e) {
             throw new StorageException("Update operation error", file.getName(), e);
         }
@@ -71,36 +57,9 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     }
 
     @Override
-    protected List<Resume> getAll() {
-        List<Resume> returnValue = new ArrayList<>();
-        File[] files = directory.listFiles();
-        if (files == null) {
-            throw new StorageException("Directory is null", null);
-        }
-        for (File file : files) {
-            returnValue.add(getImpl(file));
-        }
-        return returnValue;
+    protected File converter(File file) {
+        return file;
     }
 
-    @Override
-    public int size() {
-        String[] list = directory.list();
-        if (list == null) {
-            throw new StorageException("Directory is null", null);
-        }
-        return list.length;
-    }
 
-    @Override
-    public void clear() {
-        File[] files = directory.listFiles();
-        if (files == null) {
-            throw new StorageException("Directory is null", null);
-        } else {
-            for (File file : files) {
-                deleteImpl(file);
-            }
-        }
-    }
 }
