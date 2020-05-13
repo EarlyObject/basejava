@@ -38,8 +38,7 @@ public class FileStorage extends AbstractStorage<File> {
     @Override
     protected Resume getImpl(File file) {
         try {
-            Resume resume = serializator.readImpl(new BufferedInputStream(new FileInputStream(file)));
-            return resume;
+            return serializator.readImpl(new BufferedInputStream(new FileInputStream(file)));
         } catch (IOException e) {
             throw new StorageException("Read operation error" + e.getMessage() , file.getName(), e);
         }
@@ -93,7 +92,6 @@ public class FileStorage extends AbstractStorage<File> {
     public void clear() {
         File[] files = directory.listFiles();
         nullCheck(files);
-
         for (File file : files) {
             deleteImpl(file);
         }
@@ -101,7 +99,7 @@ public class FileStorage extends AbstractStorage<File> {
 
     public <T> void nullCheck(T[] files) {
         if (files == null) {
-            throw new StorageException("Directory is null", null);
+            throw new StorageException("Directory is null");
         }
     }
 }

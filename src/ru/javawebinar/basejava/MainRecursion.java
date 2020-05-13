@@ -7,18 +7,16 @@ public class MainRecursion {
     public static void main(String[] args) {
         File file = new File("/Users/ardaksydyknazar/Projects/basejava");
         File[] rootFolder = file.listFiles();
-        recursivePrint(Objects.requireNonNull(rootFolder), 0);
+        recursivePrint(Objects.requireNonNull(rootFolder), "");
     }
 
-    public static void recursivePrint(File[] rootFolder, int level) {
+    public static void recursivePrint(File[] rootFolder, String tab) {
         for (File file : rootFolder) {
-            for (int i = 0; i < level; i++)
-                System.out.print("\t");
             if (file.isFile()) {
-                System.out.println(file.getName());
+                System.out.println(tab + file.getName());
             } else if (file.isDirectory()) {
-                System.out.println("[" + file.getName() + "]");
-                recursivePrint(Objects.requireNonNull(file.listFiles()), level + 1);
+                System.out.println(tab + "[" + file.getName() + "]");
+                recursivePrint(Objects.requireNonNull(file.listFiles()), tab + " ");
             }
         }
     }
